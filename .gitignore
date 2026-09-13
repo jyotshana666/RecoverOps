@@ -1,7 +1,8 @@
-# Dataset
-data/
-results/
+# Dataset and Results (root only)
+/data/
+/results/
 .env
+.freebuff/
 
 # Python
 __pycache__/

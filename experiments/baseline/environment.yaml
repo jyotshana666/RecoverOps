@@ -1,0 +1,21 @@
+# Reproducibility Environment Specification
+# RecoverOps RT-DETR-L Baseline
+
+environment:
+  python: "3.14.7"
+  framework: "Ultralytics YOLO / RT-DETR"
+
+pinned_dependencies:
+  ultralytics: "8.3.0"
+  torch: ">=2.0.0"
+  torchvision: ">=0.15.0"
+  opencv-python-headless: "4.13.0.92"
+  pillow: "12.2.0"
+  pyyaml: "6.0.3"
+  tqdm: "4.67.3"
+  psutil: "7.2.2"
+  py-cpuinfo: "9.0.0"
+  ultralytics-thop: "2.1.6"
+
+kaggle_recommended_install:
+  pip_command: "pip install ultralytics==8.3.0"
