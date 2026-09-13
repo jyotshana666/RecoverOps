@@ -1,0 +1,26 @@
+{
+  "_label": "TEST FIXTURE 1 — clear overdue invoice (synthetic, not a real invoice)",
+  "description": "Amount + due date present, high confidence, due date strictly in the past relative to as_of_date. Expected: intent=overdue_payment, SAFE, payment_reminder, no human review.",
+  "request": {
+    "document_id": "test-001",
+    "as_of_date": "2026-09-01",
+    "fields": [
+      {
+        "field": "amount_due",
+        "value": "55000.00",
+        "value_normalized": 55000.0,
+        "source": "rtdetr",
+        "confidence": 0.94,
+        "bbox": [412.0, 96.0, 560.0, 118.0]
+      },
+      {
+        "field": "date_due",
+        "value": "2026-08-15",
+        "value_normalized": "2026-08-15",
+        "source": "rtdetr",
+        "confidence": 0.92,
+        "bbox": [380.0, 150.0, 500.0, 170.0]
+      }
+    ]
+  }
+}

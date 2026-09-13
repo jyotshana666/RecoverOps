@@ -1,0 +1,25 @@
+{
+  "_label": "TEST FIXTURE 4 — missing amount (synthetic, not a real invoice)",
+  "description": "Due date present and trusted; no amount_due detection at all. Expected: intent=missing_financial_evidence, BLOCKED, document_ocr_review_request, requires_human_review=true.",
+  "request": {
+    "document_id": "test-004",
+    "as_of_date": "2026-09-01",
+    "fields": [
+      {
+        "field": "date_due",
+        "value": "2026-09-15",
+        "value_normalized": "2026-09-15",
+        "source": "rtdetr",
+        "confidence": 0.9,
+        "bbox": [378.0, 149.0, 502.0, 169.0]
+      },
+      {
+        "field": "vendor_name",
+        "value": "Acme Supplies Ltd",
+        "source": "rtdetr",
+        "confidence": 0.87,
+        "bbox": [60.0, 40.0, 300.0, 64.0]
+      }
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "_label": "TEST FIXTURE 3 — missing due date (synthetic, not a real invoice)",
+  "description": "Amount present and trusted; no date_due detection at all. Expected: intent=missing_due_date, BLOCKED, invoice_verification_request, requires_human_review=true.",
+  "request": {
+    "document_id": "test-003",
+    "as_of_date": "2026-09-01",
+    "fields": [
+      {
+        "field": "amount_due",
+        "value": "22000",
+        "value_normalized": 22000.0,
+        "source": "rtdetr",
+        "confidence": 0.93,
+        "bbox": [405.0, 94.0, 558.0, 117.0]
+      },
+      {
+        "field": "date_issue",
+        "value": "2026-08-20",
+        "value_normalized": "2026-08-20",
+        "source": "rtdetr",
+        "confidence": 0.88,
+        "bbox": [120.0, 60.0, 250.0, 80.0]
+      }
+    ]
+  }
+}

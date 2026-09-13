@@ -1,0 +1,26 @@
+{
+  "_label": "TEST FIXTURE 5 — low-confidence detection (synthetic, not a real invoice)",
+  "description": "Amount + due date present and consistent, but detection confidences are below SAFE_CONFIDENCE (0.80). Expected: intent=manual_review (spec: low confidence → manual_review), state=REVIEW, escalate_to_human, requires_human_review=true.",
+  "request": {
+    "document_id": "test-005",
+    "as_of_date": "2026-09-01",
+    "fields": [
+      {
+        "field": "amount_due",
+        "value": "9500",
+        "value_normalized": 9500.0,
+        "source": "rtdetr",
+        "confidence": 0.64,
+        "bbox": [410.0, 95.0, 556.0, 117.0]
+      },
+      {
+        "field": "date_due",
+        "value": "2026-10-05",
+        "value_normalized": "2026-10-05",
+        "source": "rtdetr",
+        "confidence": 0.62,
+        "bbox": [375.0, 150.0, 499.0, 170.0]
+      }
+    ]
+  }
+}

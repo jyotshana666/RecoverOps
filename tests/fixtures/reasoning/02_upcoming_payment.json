@@ -1,0 +1,26 @@
+{
+  "_label": "TEST FIXTURE 2 — upcoming payment (synthetic, not a real invoice)",
+  "description": "Amount + due date present, high confidence, due date in the future relative to as_of_date. Expected: intent=upcoming_due, SAFE, pre_due_reminder, no human review.",
+  "request": {
+    "document_id": "test-002",
+    "as_of_date": "2026-09-01",
+    "fields": [
+      {
+        "field": "amount_due",
+        "value": "18750.50",
+        "value_normalized": 18750.5,
+        "source": "rtdetr",
+        "confidence": 0.9,
+        "bbox": [400.0, 92.0, 555.0, 116.0]
+      },
+      {
+        "field": "date_due",
+        "value": "2026-09-30",
+        "value_normalized": "2026-09-30",
+        "source": "rtdetr",
+        "confidence": 0.91,
+        "bbox": [372.0, 148.0, 498.0, 168.0]
+      }
+    ]
+  }
+}
