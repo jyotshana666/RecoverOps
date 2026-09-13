@@ -24,6 +24,7 @@ from pathlib import Path
 from typing import List, Optional
 
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile, status
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -45,6 +46,36 @@ app = FastAPI(
         "recovery reasoning layer. Produces bounded recommendations only — "
         "never executes financial transactions."
     ),
+)
+
+# ---------------------------------------------------------------------------
+# CORS Configuration
+# ---------------------------------------------------------------------------
+default_origins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+]
+
+frontend_env = os.getenv("FRONTEND_URL", "").strip()
+if frontend_env:
+    if frontend_env == "*":
+        allowed_origins = ["*"]
+    else:
+        configured_origins = [orig.strip() for orig in frontend_env.split(",") if orig.strip()]
+        allowed_origins = list(set(default_origins + configured_origins))
+else:
+    allowed_origins = default_origins
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=allowed_origins,
+    allow_credentials=True if allowed_origins != ["*"] else False,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 _DECISIONS_RECORDED = 0  # in-process audit counter (no persistence by design)

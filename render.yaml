@@ -1,0 +1,16 @@
+# Render Blueprint Configuration for RecoverOps FastAPI Backend
+services:
+  - type: web
+    name: recoverops-backend
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: standard # Or free / starter based on memory requirements
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: MODEL_PATH
+        value: /app/models/best.pt
+      - key: FRONTEND_URL
+        value: https://recoverops.vercel.app,http://localhost:5173

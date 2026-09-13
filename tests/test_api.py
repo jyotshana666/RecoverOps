@@ -46,6 +46,13 @@ class TestHealthEndpoints:
         assert data["status"] == "ok"
         assert data["service"] == "recoverops-unified"
 
+    def test_cors_headers(self):
+        client = TestClient(app)
+        headers = {"Origin": "http://localhost:5173"}
+        resp = client.get("/health", headers=headers)
+        assert resp.status_code == 200
+        assert resp.headers.get("access-control-allow-origin") == "http://localhost:5173"
+
 
 class TestReasonEndpointRegression:
     def test_reason_valid_request(self):
