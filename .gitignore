@@ -4,6 +4,14 @@
 .env
 .freebuff/
 
+# Model Checkpoints (exclude large weights)
+models/*.pt
+models/*.pth
+models/*.bin
+models/*.onnx
+models/*.engine
+!models/README.md
+
 # Python
 __pycache__/
 *.py[cod]
