@@ -57,16 +57,41 @@ Because optical character recognition (OCR) text transcription is decoupled and 
 ## 📊 Evaluation Results
 
 | Metric | Result |
-|---|---|
-| mAP@50 | `N/A — not recorded` |
-| mAP@50-95 | `N/A — not recorded` |
-| Precision | `N/A — not recorded` |
-| Recall | `N/A — not recorded` |
-| Test Images | `N/A — not recorded (Evaluated on Hidden External Test Set)` |
-| Training Duration | `N/A — not recorded (1-Epoch Smoke Test Verified)` |
+|---|---:|
+| mAP@50 | 0.704 |
+| mAP@50-95 | 0.492 |
+| Precision | 0.775 |
+| Recall | 0.621 |
+| Test Images | 635 |
+| Test Instances | 2,210 |
+| Training Duration | 0.685 hours (~41.1 minutes) |
+| Epochs | 5 |
+| Image Size | 640 |
+| GPU | Tesla T4 (14,912 MiB) |
+
+### 5-Epoch Training Result
+
+The RT-DETR-L baseline was trained for 5 epochs on the DocILE-based RecoverOps dataset. The best checkpoint achieved:
+
+- Precision: 0.775
+- Recall: 0.621
+- mAP@50: 0.704
+- mAP@50-95: 0.492
+
+Per-class validation results:
+
+| Class | Precision | Recall | mAP@50 | mAP@50-95 |
+|---|---:|---:|---:|---:|
+| amount_due | 0.741 | 0.658 | 0.775 | 0.541 |
+| date_due | 0.738 | 0.506 | 0.562 | 0.400 |
+| document_id | 0.765 | 0.700 | 0.760 | 0.506 |
+| date_issue | 0.839 | 0.709 | 0.804 | 0.567 |
+| vendor_name | 0.792 | 0.534 | 0.616 | 0.444 |
+
+> The 5-epoch `best.pt` checkpoint was successfully generated during the Kaggle run, but model weights are excluded from GitHub via `.gitignore`. The checkpoint will be regenerated/downloaded during the next Kaggle session before final inference and deployment verification.
 
 ### Metric Interpretation:
-* **Current Status**: The baseline training pipeline and 1-epoch GPU smoke test were validated on Kaggle (`kaggle/recoverops.ipynb`). Full 50-epoch final weights are `N/A — not recorded` locally as `.pt` weight files are excluded from Git per reproducibility best practices.
+* **Current Status**: The baseline 5-epoch RT-DETR-L training run was completed and validated on Kaggle (`kaggle/recoverops.ipynb`).
 * **Evaluation Script**: Model evaluation is executed via `src/training/evaluate_rtdetr.py`, which computes standard COCO mAP metrics over the 635 validation pages in `data/processed/invoice_detection/`.
 * **Metric Scope**: Bounding-box mAP measures spatial localization overlap only; text transcription accuracy is handled downstream by the reasoning layer.
 
@@ -298,19 +323,15 @@ curl -X POST http://localhost:8000/process \
 | Component | Status | Evidence |
 |---|---|---|
 | **Dataset Preparation** | Verified Complete | 7,394 images, 26,718 annotations converted from DocILE (`results/conversion_report.json`) |
-| **RT-DETR Training** | Script Ready & Smoke-Tested | `src/training/train_rtdetr.py` + 1-epoch GPU smoke test verified |
-| **RT-DETR Evaluation** | Script Ready | `src/training/evaluate_rtdetr.py` (50-epoch numbers `N/A — not recorded`) |
-| **Part B Reasoning** | Verified Complete | `src/reasoning/` (58 unit tests passing) |
-| **Part A + B Integration** | Verified Complete | `src/pipeline/adapter.py` connecting `DetectionResult` → `EvidenceRequest` |
-| **`/detect` Endpoint** | Verified Complete | Implemented in `src/reasoning/app.py`, tested in `tests/test_api.py` |
-| **`/reason` Endpoint** | Verified Complete | Implemented in `src/reasoning/app.py`, tested in `tests/test_reasoning.py` |
-| **`/process` Endpoint** | Verified Complete | Implemented in `src/reasoning/app.py`, tested in `tests/test_api.py` |
+| **Part A Training** | COMPLETED — 5-epoch baseline verified | RT-DETR-L trained on Tesla T4 (5 epochs, mAP@50: 0.704) |
+| **Part A Inference** | PENDING checkpoint restoration | Standby mode active; checkpoint excluded via `.gitignore` pending restoration |
+| **Part A + Part B Integration** | IMPLEMENTED and locally tested | `src/pipeline/adapter.py` connecting `DetectionResult` → `EvidenceRequest` |
+| **Backend API** | IMPLEMENTED | FastAPI endpoints `/health`, `/reason`, `/detect`, `/process` (`src/app.py`) |
+| **Frontend** | IMPLEMENTED | React + Vite app with interactive canvas bounding box overlay (`frontend/`) |
+| **Docker** | IMPLEMENTED | Multi-stage `Dockerfile` (`python:3.12-slim`), built and verified locally |
+| **Render Deployment** | PENDING | `render.yaml` Infrastructure-as-Code configured for web service |
+| **Vercel Deployment** | PENDING | `frontend/vercel.json` SPA configuration created |
 | **Automated Tests** | Verified Complete | **84 tests passed** (`pytest -v`) |
-| **Dockerization** | Verified Complete | `Dockerfile` (`python:3.12-slim`), built and verified locally |
-| **Backend Deployment** | Configured for Render | `render.yaml` blueprint created |
-| **Frontend UI** | Verified Complete | React + Vite app with HTML5 canvas bounding box overlay (`frontend/`) |
-| **Vercel Deployment** | Configured for Vercel | `frontend/vercel.json` SPA configuration created |
-| **Render Deployment** | Configured for Render | `render.yaml` Infrastructure-as-Code created |
 
 ---
 
